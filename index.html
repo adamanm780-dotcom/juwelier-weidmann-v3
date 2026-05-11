@@ -245,14 +245,23 @@
   /* ============ REVEAL on scroll ============ */
   .reveal{opacity:0;transform:translateY(34px);transition:opacity 1s cubic-bezier(.22,.61,.36,1),transform 1.1s cubic-bezier(.22,.61,.36,1)}
   .reveal.in{opacity:1;transform:none}
-  .reveal-stagger > *{opacity:0;transform:translateY(40px);transition:opacity .9s cubic-bezier(.22,.61,.36,1),transform 1s cubic-bezier(.22,.61,.36,1)}
+  .reveal-stagger > *{opacity:0;transform:translateY(40px);transition:opacity .9s cubic-bezier(.22,.61,.36,1),transform 1.05s cubic-bezier(.22,.61,.36,1)}
   .reveal-stagger.in > *{opacity:1;transform:none}
-  .reveal-stagger.in > *:nth-child(2){transition-delay:.08s}
-  .reveal-stagger.in > *:nth-child(3){transition-delay:.16s}
-  .reveal-stagger.in > *:nth-child(4){transition-delay:.24s}
-  .reveal-stagger.in > *:nth-child(5){transition-delay:.32s}
-  .reveal-stagger.in > *:nth-child(6){transition-delay:.4s}
-  @media (prefers-reduced-motion:reduce){.reveal,.reveal-stagger > *{opacity:1;transform:none;transition:none}}
+  .reveal-stagger.in > *:nth-child(2){transition-delay:.1s}
+  .reveal-stagger.in > *:nth-child(3){transition-delay:.2s}
+  .reveal-stagger.in > *:nth-child(4){transition-delay:.3s}
+  .reveal-stagger.in > *:nth-child(5){transition-delay:.4s}
+  .reveal-stagger.in > *:nth-child(6){transition-delay:.5s}
+
+  /* Side-slide reveals — Bilder slide-in von links/rechts */
+  .reveal-left{opacity:0;transform:translate3d(-120px,0,0);transition:opacity 1.1s cubic-bezier(.22,.61,.36,1),transform 1.25s cubic-bezier(.22,.61,.36,1)}
+  .reveal-right{opacity:0;transform:translate3d(120px,0,0);transition:opacity 1.1s cubic-bezier(.22,.61,.36,1),transform 1.25s cubic-bezier(.22,.61,.36,1)}
+  .reveal-left.in,.reveal-right.in{opacity:1;transform:none}
+  .reveal-stagger.from-side > *{transition:opacity 1.05s cubic-bezier(.22,.61,.36,1),transform 1.2s cubic-bezier(.22,.61,.36,1)}
+  .reveal-stagger.from-side > *:nth-child(odd){transform:translate3d(-130px,0,0)}
+  .reveal-stagger.from-side > *:nth-child(even){transform:translate3d(130px,0,0)}
+  .reveal-stagger.from-side.in > *{transform:none}
+  @media (prefers-reduced-motion:reduce){.reveal,.reveal-stagger > *,.reveal-left,.reveal-right,.reveal-stagger.from-side > *{opacity:1;transform:none;transition:none}}
 
   /* CURSOR-GLOW (hero only) */
   .glow{position:fixed;pointer-events:none;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(47,110,91,.22),transparent 70%);transform:translate(-50%,-50%);z-index:55;mix-blend-mode:screen;opacity:0;transition:opacity .6s ease;will-change:transform,opacity}
@@ -484,7 +493,7 @@
       <h2 class="serif">Kollektionen<br/>im Überblick.</h2>
       <div class="meta">Vier Schwerpunkte<br/>für ein Leben in Schmuck</div>
     </div>
-    <div class="cat-grid reveal-stagger">
+    <div class="cat-grid reveal-stagger from-side">
       <a class="cat cat-a" href="#trauringe">
         <div class="img"><picture><source srcset="assets/detail-06.webp" type="image/webp"><img src="assets/detail-06.webp" alt="Trauringe im Walnussetui" loading="lazy"></picture></div>
         <div class="body"><span class="num">I · Trauringe</span><h3 class="serif">Für den gemeinsamen Weg.</h3><p class="desc">Klassisch, modern oder Mischmetall — angepasst an euer Paar.</p></div>
@@ -512,7 +521,7 @@
       <div class="gold-line">Signature</div>
       <h2 class="serif">Stücke aus der Werkstatt.</h2>
     </div>
-    <div class="feat-grid reveal-stagger">
+    <div class="feat-grid reveal-stagger from-side">
       <article class="feat">
         <div class="img"><picture><source srcset="assets/detail-01.webp" type="image/webp"><img src="assets/detail-01.webp" alt="Jade-Steine auf Cremepapier" loading="lazy"></picture></div>
         <span class="num">I · Collier</span>
@@ -589,7 +598,7 @@
       </div>
       <div class="meta" style="font-size:13px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted)">Ausgewählte Stücke<br/>Frühjahr 2026</div>
     </div>
-    <div class="detail-grid reveal-stagger">
+    <div class="detail-grid reveal-stagger from-side">
       <div class="di di-1"><picture><source srcset="assets/detail-01.webp" type="image/webp"><img src="assets/detail-01.webp" alt="Jade-Steine" loading="lazy"></picture></div>
       <div class="di di-2"><picture><source srcset="assets/detail-02.webp" type="image/webp"><img src="assets/detail-02.webp" alt="Halskette mit Jade-Anhänger" loading="lazy"></picture></div>
       <div class="di di-3"><picture><source srcset="assets/detail-03.webp" type="image/webp"><img src="assets/detail-03.webp" alt="Smaragd-Signet" loading="lazy"></picture></div>
@@ -660,7 +669,7 @@
       if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
     });
   }, { threshold: 0.14, rootMargin: '0px 0px -10% 0px' });
-  document.querySelectorAll('.reveal, .reveal-stagger').forEach((el) => io.observe(el));
+  document.querySelectorAll('.reveal, .reveal-stagger, .reveal-left, .reveal-right').forEach((el) => io.observe(el));
 
   // Header compact on scroll
   const header = document.getElementById('siteHeader');
