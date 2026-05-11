@@ -41,3 +41,4 @@
 ## Updates
 - 2026-05-11: Initial Build V3 (light + dark wood + scroll-driven hero reveal + parallax band + sticky atelier)
 - 2026-05-11: Scroll-Frame-Animation eingebaut (50 Frames, Seedance 1.0-Pro + Nano-Banana-Greenscreen, Platinring rotiert beim Scrollen von Front- zur Aufsicht). Asset-Ordner: assets/scroll/frames-clean/ (1.5MB, WebP-alpha via ffmpeg colorkey)
+- 2026-05-11: Scroll-Animation neu generiert — Jade-Ring durch Diamant-Solitärring ersetzt. Alte Frames hatten Greenscreen-Artefakte (grüner Saum, Geister-Reflexion), weil das Jade-Grün mit Chromakey #00b140 verschmolzen ist. Neuer Pipeline-Wechsel: Nano Banana auf reinem Weiß-BG → Seedance 1.0-Pro → ffmpeg-Extraktion → AI-Background-Remover `lucataco/remove-bg` pro Frame (statt Chromakey) → libwebp Q82 mit Alpha. Resultat: 1.9MB, kein grüner Saum, Diamant und Metall sauber freigestellt. Caption/Alt-Text angepasst auf „Platin · Brillant".
