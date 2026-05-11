@@ -339,6 +339,58 @@
   </div>
 </div>
 
+<!-- BUILDSCROLL:START -->
+<section class="scroll-anim" id="scroll-anim" aria-label="Trauring rotiert beim Scrollen von Frontalansicht zur Aufsicht">
+  <div class="scroll-anim__sticky">
+    <div class="scroll-anim__inner">
+      <span class="scroll-anim__overline">Werkstattstück</span>
+      <h2 class="scroll-anim__title">Aus jedem Winkel<br/><em>von Hand gefertigt.</em></h2>
+      <img class="scroll-anim__frame" src="assets/scroll/frames-clean/frame-001.webp" alt="Platinring mit Jadestein, rotierend" decoding="async" />
+      <p class="scroll-anim__caption">Platin · Jade · Hand­gefertigt in der Burgstraße</p>
+    </div>
+  </div>
+  <div class="scroll-anim__spacer" aria-hidden="true"></div>
+</section>
+<style>
+.scroll-anim{position:relative;background:var(--bg)}
+.scroll-anim__spacer{height:300vh;pointer-events:none}
+.scroll-anim__sticky{position:sticky;top:0;height:100vh;display:grid;place-items:center;z-index:1;overflow:hidden}
+.scroll-anim__inner{position:relative;display:flex;flex-direction:column;align-items:center;gap:24px;width:min(94vw,900px);padding:0 4vw;text-align:center}
+.scroll-anim__overline{font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--accent);font-weight:500}
+.scroll-anim__title{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:clamp(32px,4.4vw,60px);line-height:1.12;color:var(--text);letter-spacing:-.005em;margin-bottom:6px}
+.scroll-anim__title em{font-style:italic;color:var(--accent)}
+.scroll-anim__frame{display:block;max-width:min(60vw,520px);max-height:58vh;width:auto;height:auto;object-fit:contain;will-change:contents;filter:drop-shadow(0 22px 50px rgba(35,23,17,.18))}
+.scroll-anim__caption{font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--muted);margin-top:8px}
+@media (max-width:768px){.scroll-anim__spacer{height:240vh}.scroll-anim__frame{max-width:80vw;max-height:48vh}.scroll-anim__title{font-size:clamp(26px,7vw,40px)}}
+@media (prefers-reduced-motion:reduce){.scroll-anim__spacer{height:auto;min-height:60vh}}
+</style>
+<script>
+(() => {
+  const FRAME_COUNT = 50;
+  const PAD = (n) => String(n).padStart(3,'0');
+  const SRC = (i) => `assets/scroll/frames-clean/frame-${PAD(i+1)}.webp`;
+  const section = document.getElementById('scroll-anim');
+  if (!section) return;
+  const img = section.querySelector('.scroll-anim__frame');
+  for (let i = 0; i < FRAME_COUNT; i++) { const im = new Image(); im.src = SRC(i); }
+  let current = 0, raf = 0;
+  function update(){
+    const rect = section.getBoundingClientRect();
+    const total = section.offsetHeight - window.innerHeight;
+    if (total <= 0) return;
+    const progress = Math.min(1, Math.max(0, -rect.top / total));
+    const idx = Math.min(FRAME_COUNT - 1, Math.floor(progress * FRAME_COUNT));
+    if (idx !== current){ current = idx; img.src = SRC(idx); }
+  }
+  window.addEventListener('scroll', () => {
+    if (raf) return;
+    raf = requestAnimationFrame(() => { update(); raf = 0; });
+  }, { passive: true });
+  update();
+})();
+</script>
+<!-- BUILDSCROLL:END -->
+
 <!-- INTRO -->
 <section class="intro" id="ueber">
   <div class="container">
